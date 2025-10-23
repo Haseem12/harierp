@@ -156,8 +156,8 @@ export interface Invoice {
 export const defaultCompanyDetails = {
   name: "Hari Industries Limited",
   address: "KM 3 Zaria-Kano Expressway, Maraban Gwanda, Sabon Gari Zaria Kaduna State",
-  phone: "+234 8093939368",
-  email: "billing@hariindustries.ng",
+  phone: "+234 8093939368, 08125293535",
+  email: "billing@hariindustries.ng, contact@hariindustries.ng",
   logoUrl: "http://harisindustries.com.ng/busa-api/database/hari%20logo-01.png",
 };
 

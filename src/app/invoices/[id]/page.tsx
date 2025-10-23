@@ -215,17 +215,27 @@ export default function InvoiceDetailsPage() {
             <CardHeader className="bg-muted/30 p-6 print:bg-transparent">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div className="flex items-center gap-4">
-                    {invoice.companyDetails?.logoUrl && <Image src={invoice.companyDetails.logoUrl} alt="Company Logo" width={60} height={60} className="rounded-full" />}
+                    <img 
+  src="http://harisindustries.com.ng/busa-api/database/hari%20logo-01.png" 
+  alt="Company Logo" 
+  style={{
+    width: "50px",
+    height: "50px",
+    borderRadius: "50%",
+    objectFit: "cover"
+  }}
+/>
+
                     <div>
                         <h1 className="text-3xl font-bold text-primary">INVOICE</h1>
                         <p className="text-muted-foreground"># {invoice.invoiceNumber}</p>
                     </div>
                 </div>
                 <div className="text-left sm:text-right">
-                  <h2 className="text-lg font-semibold">{invoice.companyDetails.name}</h2>
-                  <p className="text-sm text-muted-foreground">{invoice.companyDetails.address}</p>
-                  <p className="text-sm text-muted-foreground">{invoice.companyDetails.phone}</p>
-                  <p className="text-sm text-muted-foreground">{invoice.companyDetails.email}</p>
+                  <h2 className="text-lg font-semibold">Hari Industries Limited</h2>
+                  <p className="text-sm text-muted-foreground">KM 3 Zaria-Kano Expressway, Maraban Gwanda, Sabon Gari Zaria Kaduna State</p>
+                  <p className="text-sm text-muted-foreground">+234 8093939368, 08125293535</p>
+                  <p className="text-sm text-muted-foreground">billing@hariindustries.ng, contact@hariindustries.ng</p>
                 </div>
               </div>
             </CardHeader>
