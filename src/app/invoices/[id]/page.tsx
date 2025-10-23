@@ -327,69 +327,53 @@ export default function InvoiceDetailsPage() {
           </Card>
         </div>
       </div>
-      <style jsx global>{`
+     <style jsx global>{`
   @media print {
     @page {
-      size: A4 portrait; /* or landscape if you prefer */
+      size: A4 portrait;
       margin: 10mm;
     }
 
     body {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-      background-color: #fff !important;
+      background: #fff !important;
       margin: 0;
       padding: 0;
     }
 
-    .print-container {
-      display: block !important;
-    }
-
-    /* Hide everything except printable area */
+    /* Hide everything except the printable area */
     body > *:not(#printable-invoice-area) {
-      visibility: hidden;
-    }
-
-    #printable-invoice-area, #printable-invoice-area * {
-      visibility: visible;
-    }
-
-    #printable-invoice-area {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      max-width: 210mm; /* ensures perfect A4 width */
-      min-height: 297mm; /* ensures full A4 height */
-      margin: 0 auto;
-      padding: 10mm 15mm;
-      box-shadow: none !important;
-      border: none !important;
-      background: #fff !important;
-      overflow: visible !important;
-    }
-
-    /* Optional: hide any print:hidden class */
-    .print\\:hidden {
       display: none !important;
     }
 
-    /* Optional watermark */
-    #printable-invoice-area::after {
-      content: attr(data-watermark);
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-45deg);
-      font-size: 10rem;
-      color: rgba(0, 0, 0, 0.05);
-      font-weight: 700;
-      z-index: -1;
-      pointer-events: none;
+    #printable-invoice-area {
+      display: block;
+      position: relative;
+      width: 210mm; /* A4 width */
+      min-height: 297mm; /* A4 height */
+      margin: 0 auto; /* center horizontally */
+      background: white;
+      padding: 10mm;
+      box-sizing: border-box;
+      page-break-inside: avoid;
+    }
+
+    /* Remove card constraints */
+    #printable-invoice-area .card,
+    #printable-invoice-area .shadow-lg,
+    #printable-invoice-area .print\\:shadow-none {
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    /* Remove unwanted margins and make it fit tightly */
+    #printable-invoice-area * {
+      max-width: 100% !important;
     }
   }
 `}</style>
+
 </>
   )
 }
