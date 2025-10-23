@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Static</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1>Dashboard</h1>
+        </header>
+
+        <section class="summary-stats-section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Revenue</h3>
+                    <span class="card-icon">💰</span>
+                </div>
+                <div class="card-content">
+                    <p class="stat-value" id="totalRevenueValue">Loading...</p>
+                    <!-- <p class="stat-subtext">+20.1% from last month</p> -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Total Sales</h3>
+                    <span class="card-icon">🛒</span>
+                </div>
+                <div class="card-content">
+                    <p class="stat-value" id="totalSalesValue">Loading...</p>
+                    <!-- <p class="stat-subtext">+180.1% from last month</p> -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Pending Invoices</h3>
+                    <span class="card-icon">📄</span>
+                </div>
+                <div class="card-content">
+                    <p class="stat-value" id="pendingInvoicesValue">Loading...</p>
+                    <p class="stat-subtext">Requiring attention</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Low Stock Items</h3>
+                    <span class="card-icon">📦</span>
+                </div>
+                <div class="card-content">
+                    <p class="stat-value" id="lowStockItemsValue">Loading...</p>
+                    <p class="stat-subtext">Needs reordering</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-content-grid">
+            <div class="card quick-actions-card">
+                <div class="card-header">
+                    <h2 class="card-title">Quick Actions</h2>
+                    <p class="card-description">Get started with common tasks.</p>
+                </div>
+                <div class="card-content quick-actions-grid">
+                    <a href="#" class="quick-action-button">🛒 New Sale</a>
+                    <a href="#" class="quick-action-button">📄 New Invoice</a>
+                    <a href="#" class="quick-action-button">📦 Add Product</a>
+                    <a href="#" class="quick-action-button">👥 Add Ledger Account</a>
+                    <a href="#" class="quick-action-button">📒 Manage Accounts</a>
+                    <a href="#" class="quick-action-button">📊 View All Activities</a>
+                </div>
+            </div>
+
+            <div class="card recent-activity-card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Activity</h2>
+                    <p class="card-description">Overview of recent transactions.</p>
+                </div>
+                <div class="card-content">
+                    <ul id="recentActivityList" class="recent-activity-list">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="100" height="100" rx="15" fill="hsl(var(--primary))"/>
+<path d="M50 25C48.3431 25 47 26.3431 47 28V40C47 41.6569 48.3431 43 50 43C51.6569 43 53 41.6569 53 40V28C53 26.3431 51.6569 25 50 25Z" fill="hsl(var(--primary-foreground))"/>
+<path d="M29 43C27.3431 43 26 44.3431 26 46V70C26 71.6569 27.3431 73 29 73H71C72.6569 73 74 71.6569 74 70V46C74 44.3431 72.6569 43 71 43H29Z" fill="hsl(var(--primary-foreground))" stroke="hsl(var(--primary-foreground))" stroke-width="2" stroke-linejoin="round"/>
+<path d="M40 50H60" stroke="hsl(var(--primary))" stroke-width="4" stroke-linecap="round"/>
+<path d="M40 60H60" stroke="hsl(var(--primary))" stroke-width="4" stroke-linecap="round"/>
+</svg>

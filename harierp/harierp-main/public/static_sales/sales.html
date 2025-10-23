@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Transactions</title>
+    <link rel="stylesheet" href="sales.css">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1>Sales Transactions</h1>
+            <div class="actions">
+                <button class="button outline-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Export Sales
+                </button>
+                <button class="button primary-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                    Record Sale
+                </button>
+            </div>
+        </header>
+
+        <main class="card">
+            <div class="card-header">
+                <h2 class="card-title">Sales Log</h2>
+                <p class="card-description">Manage and track all sales transactions.</p>
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg>
+                    <input type="search" id="searchInput" placeholder="Search sales by ID, customer, or status..." class="search-input">
+                </div>
+            </div>
+            <div class="card-content">
+                <table class="sales-table">
+                    <thead>
+                        <tr>
+                            <th>Sale ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="text-right">Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesTableBody">
+                        <!-- Sales rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <p id="salesTableFooter">Showing 0 of 0 sales</p>
+            </div>
+        </main>
+    </div>
+    <script src="sales.js"></script>
+</body>
+</html>
