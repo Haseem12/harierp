@@ -266,73 +266,67 @@ export default function PurchaseOrderDetailPage() {
        <style jsx global>{`
   @media print {
     @page {
-      size: A4 portrait;
-      margin: 10mm 12mm; /* Adds a safe printer margin */
+      size: A4 portrait; /* or landscape if you prefer */
+      margin: 10mm;
     }
 
     body {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-      background: #fff !important;
-      color: #000 !important;
+      background-color: #fff !important;
       margin: 0;
       padding: 0;
     }
 
-    /* Hide everything except the printable area */
-    body * {
-      visibility: hidden !important;
-      box-shadow: none !important;
-      text-shadow: none !important;
-      background: transparent !important;
+    .print-container {
+      display: block !important;
     }
 
-    #printable-area, #printable-area * {
-      visibility: visible !important;
+    /* Hide everything except printable area */
+    body > *:not(#printable-invoice-area) {
+      visibility: hidden;
     }
 
-    #printable-area {
+    #printable-invoice-area, #printable-invoice-area * {
+      visibility: visible;
+    }
+
+    #printable-invoice-area {
       position: absolute;
       left: 0;
       top: 0;
-      width: 210mm; /* A4 width */
-      min-height: 297mm; /* A4 height */
+      width: 100%;
+      max-width: 210mm; /* ensures perfect A4 width */
+      min-height: 297mm; /* ensures full A4 height */
       margin: 0 auto;
-      padding: 15mm 20mm;
-      background: #fff !important;
-      font-size: 10pt;
+      padding: 10mm 15mm;
       box-shadow: none !important;
       border: none !important;
+      background: #fff !important;
       overflow: visible !important;
     }
 
-    /* Utility print modifiers */
-    .print\\:hidden { display: none !important; }
-    .print\\:shadow-none { box-shadow: none !important; }
-    .print\\:border-none { border: none !important; }
-    .print\\:bg-transparent { background-color: transparent !important; }
-
-    /* Font scaling for print readability */
-    .print\\:text-xl { font-size: 1.25rem !important; }
-    .print\\:text-lg { font-size: 1.125rem !important; }
-    .print\\:text-base { font-size: 1rem !important; }
-    .print\\:text-sm { font-size: 0.875rem !important; }
-    .print\\:text-xs { font-size: 0.75rem !important; }
-
-    /* Padding and spacing utilities */
-    .print\\:p-2 { padding: 0.5rem !important; }
-    .print\\:mt-16 { margin-top: 4rem !important; }
-
-    /* Prevent any unwanted page breaks mid-table or header */
-    table, tr, td, th {
-      page-break-inside: avoid !important;
+    /* Optional: hide any print:hidden class */
+    .print\\:hidden {
+      display: none !important;
     }
 
-    header, footer {
-      page-break-inside: avoid !important;
+    /* Optional watermark */
+    #printable-invoice-area::after {
+      content: attr(data-watermark);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 10rem;
+      color: rgba(0, 0, 0, 0.05);
+      font-weight: 700;
+      z-index: -1;
+      pointer-events: none;
     }
   }
 `}</style>
+</>
 
     </>
   );
