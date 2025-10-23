@@ -209,8 +209,10 @@ export default function InvoiceDetailsPage() {
             </AlertDialog>
           </div>
         </div>
-
+<div className="flex justify-center items-start w-full bg-gray-50 p-4 print:bg-transparent">
+  <div id="printable-invoice-area" data-watermark={watermarkText} className="max-w-3xl w-full">
         <div id="printable-invoice-area" data-watermark={watermarkText}>
+          
           <Card className="w-full shadow-lg print:shadow-none print:border-none">
             <CardHeader className="bg-muted/30 p-6 print:bg-transparent">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
@@ -327,11 +329,13 @@ export default function InvoiceDetailsPage() {
           </Card>
         </div>
       </div>
-     <style jsx global>{`
+    </div>
+</div>
+<style jsx global>{`
   @media print {
     @page {
-      size: A4 portrait;
-      margin: 10mm;
+      size: A4;
+      margin: 12mm;
     }
 
     body {
@@ -342,37 +346,53 @@ export default function InvoiceDetailsPage() {
       padding: 0;
     }
 
-    /* Hide everything except the printable area */
+    /* Hide everything outside the invoice area */
     body > *:not(#printable-invoice-area) {
       display: none !important;
     }
 
+    /* Tailwind-friendly print container */
     #printable-invoice-area {
-      display: block;
-      position: relative;
-      width: 210mm; /* A4 width */
-      min-height: 297mm; /* A4 height */
-      margin: 0 auto; /* center horizontally */
-      background: white;
-      padding: 10mm;
-      box-sizing: border-box;
+      display: block !important;
+      background: white !important;
+      width: 100% !important;
+      margin: 0 auto !important;
+      padding: 1.5rem !important; /* ~24px */
+      border: none !important;
+      box-shadow: none !important;
       page-break-inside: avoid;
     }
 
-    /* Remove card constraints */
-    #printable-invoice-area .card,
-    #printable-invoice-area .shadow-lg,
-    #printable-invoice-area .print\\:shadow-none {
+    /* Make all child elements visible */
+    #printable-invoice-area * {
+      visibility: visible !important;
+      color: #000 !important;
+    }
+
+    /* Remove any unwanted Tailwind shadows/borders */
+    .shadow-lg,
+    .print\\:shadow-none,
+    .print\\:border-none {
       box-shadow: none !important;
       border: none !important;
     }
 
-    /* Remove unwanted margins and make it fit tightly */
-    #printable-invoice-area * {
-      max-width: 100% !important;
+    /* Fix card alignment and center content */
+    .card {
+      width: 100% !important;
+      margin: 0 auto !important;
+    }
+
+    /* Hide URLs or site footer automatically added by browsers */
+    @page :footer {
+      display: none;
+    }
+    @page :header {
+      display: none;
     }
   }
 `}</style>
+
 
 </>
   )
