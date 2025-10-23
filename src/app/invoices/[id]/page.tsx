@@ -209,10 +209,7 @@ export default function InvoiceDetailsPage() {
             </AlertDialog>
           </div>
         </div>
-<div className="flex justify-center items-start w-full bg-gray-50 p-4 print:bg-transparent">
-  <div id="printable-invoice-area" data-watermark={watermarkText} className="max-w-3xl w-full">
-        <div id="printable-invoice-area" data-watermark={watermarkText}>
-          
+        
           <Card className="w-full shadow-lg print:shadow-none print:border-none">
             <CardHeader className="bg-muted/30 p-6 print:bg-transparent">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
@@ -329,61 +326,46 @@ export default function InvoiceDetailsPage() {
           </Card>
         </div>
       </div>
-    </div>
-</div>
 <style jsx global>{`
   @media print {
     @page {
-      size: A4;
-      margin: 12mm;
+      size: A4 portrait;
+      margin: 10mm;
     }
 
-    body {
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background: #fff;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
-      background: #fff !important;
-      margin: 0;
-      padding: 0;
     }
 
-    /* Hide everything outside the invoice area */
-    body > *:not(#printable-invoice-area) {
-      display: none !important;
+    /* Hide everything except printable area */
+    body * {
+      visibility: hidden !important;
     }
 
-    /* Tailwind-friendly print container */
-    #printable-invoice-area {
-      display: block !important;
-      background: white !important;
-      width: 100% !important;
-      margin: 0 auto !important;
-      padding: 1.5rem !important; /* ~24px */
-      border: none !important;
-      box-shadow: none !important;
-      page-break-inside: avoid;
-    }
-
-    /* Make all child elements visible */
-    #printable-invoice-area * {
+    #printable-invoice-area, #printable-invoice-area * {
       visibility: visible !important;
-      color: #000 !important;
     }
 
-    /* Remove any unwanted Tailwind shadows/borders */
-    .shadow-lg,
-    .print\\:shadow-none,
-    .print\\:border-none {
+    #printable-invoice-area {
+      position: relative;
+      width: 190mm;
+      min-height: 277mm;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 15mm;
       box-shadow: none !important;
       border: none !important;
+      overflow: visible;
     }
 
-    /* Fix card alignment and center content */
-    .card {
-      width: 100% !important;
-      margin: 0 auto !important;
-    }
-
-    /* Hide URLs or site footer automatically added by browsers */
+    /* Optional: Hide URL/footer info */
     @page :footer {
       display: none;
     }
@@ -392,6 +374,7 @@ export default function InvoiceDetailsPage() {
     }
   }
 `}</style>
+
 
 
 </>
