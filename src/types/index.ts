@@ -155,10 +155,10 @@ export interface Invoice {
 
 export const defaultCompanyDetails = {
   name: "Hari Industries Limited",
-  address: "KM 143 Kano-Kaduna Expressway, Maraban Gwanda, Sabon Gari Zaria Kaduna State",
-  phone: "+234 800 123 4567",
-  email: "billing@hariindustries.com.ng",
-  logoUrl: "https://picsum.photos/seed/logo_hari/150/50",
+  address: "KM 3 Zaria-Kano Expressway, Maraban Gwanda, Sabon Gari Zaria Kaduna State",
+  phone: "+234 8093939368",
+  email: "billing@hariindustries.ng",
+  logoUrl: "http://harisindustries.com.ng/busa-api/database/hari%20logo-01.png",
 };
 
 export type LedgerAccountType = 'Premium Product' | 'Sales Rep' | 'Standard Product' | 'Supplier' | 'Customer' | 'Bank' | 'Expense' | 'Income' | 'Asset' | 'Liability' | 'Equity';

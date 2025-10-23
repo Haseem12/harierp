@@ -264,51 +264,76 @@ export default function PurchaseOrderDetailPage() {
         </div>
       </div>
        <style jsx global>{`
-          @media print {
-              @page {
-                size: A4;
-                margin: 0;
-              }
-              body {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-              }
-              body * {
-                  visibility: hidden;
-                  background: transparent !important;
-                  color: #000 !important;
-                  box-shadow: none !important;
-                  text-shadow: none !important;
-              }
-              #printable-area, #printable-area * {
-                  visibility: visible;
-              }
-              #printable-area {
-                  position: fixed;
-                  left: 0;
-                  top: 0;
-                  width: 210mm;
-                  height: auto;
-                  min-height: 297mm;
-                  margin: 0;
-                  padding: 20mm;
-                  font-size: 10pt;
-                  box-shadow: none !important;
-                  border: none !important;
-              }
-              .print\\:hidden { display: none !important; }
-              .print\\:shadow-none { box-shadow: none !important; }
-              .print\\:border-none { border: none !important; }
-              .print\\:bg-transparent { background-color: transparent !important; }
-              .print\\:text-xl { font-size: 1.25rem !important; }
-              .print\\:text-lg { font-size: 1.125rem !important; }
-              .print\\:text-base { font-size: 1rem !important; }
-              .print\\:text-sm { font-size: 0.875rem !important; }
-              .print\\:text-xs { font-size: 0.75rem !important; }
-              .print\\:p-2 { padding: 0.5rem !important; }
-              .print\\:mt-16 { margin-top: 4rem !important; }
-          }
-      `}</style>
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm; /* Adds a safe printer margin */
+    }
+
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background: #fff !important;
+      color: #000 !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Hide everything except the printable area */
+    body * {
+      visibility: hidden !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+      background: transparent !important;
+    }
+
+    #printable-area, #printable-area * {
+      visibility: visible !important;
+    }
+
+    #printable-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm; /* A4 width */
+      min-height: 297mm; /* A4 height */
+      margin: 0 auto;
+      padding: 15mm 20mm;
+      background: #fff !important;
+      font-size: 10pt;
+      box-shadow: none !important;
+      border: none !important;
+      overflow: visible !important;
+    }
+
+    /* Utility print modifiers */
+    .print\\:hidden { display: none !important; }
+    .print\\:shadow-none { box-shadow: none !important; }
+    .print\\:border-none { border: none !important; }
+    .print\\:bg-transparent { background-color: transparent !important; }
+
+    /* Font scaling for print readability */
+    .print\\:text-xl { font-size: 1.25rem !important; }
+    .print\\:text-lg { font-size: 1.125rem !important; }
+    .print\\:text-base { font-size: 1rem !important; }
+    .print\\:text-sm { font-size: 0.875rem !important; }
+    .print\\:text-xs { font-size: 0.75rem !important; }
+
+    /* Padding and spacing utilities */
+    .print\\:p-2 { padding: 0.5rem !important; }
+    .print\\:mt-16 { margin-top: 4rem !important; }
+
+    /* Prevent any unwanted page breaks mid-table or header */
+    table, tr, td, th {
+      page-break-inside: avoid !important;
+    }
+
+    header, footer {
+      page-break-inside: avoid !important;
+    }
+  }
+`}</style>
+
     </>
   );
 }

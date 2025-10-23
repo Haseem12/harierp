@@ -318,53 +318,68 @@ export default function InvoiceDetailsPage() {
         </div>
       </div>
       <style jsx global>{`
-          @media print {
-              @page {
-                size: A4;
-                margin: 0;
-              }
-              body {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                background-color: #fff;
-              }
-              .print-container {
-                  display: block !important;
-              }
-              body > *:not(#printable-invoice-area) {
-                  visibility: hidden;
-              }
-              #printable-invoice-area, #printable-invoice-area * {
-                  visibility: visible;
-              }
-              #printable-invoice-area {
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                  width: 100%;
-                  max-width: none;
-                  margin: 10mm;
-                  padding: 0;
-                  box-shadow: none !important;
-                  border: none !important;
-              }
-              .print\\:hidden {
-                  display: none !important;
-              }
-              #printable-invoice-area:after {
-                  content: attr(data-watermark);
-                  position: fixed;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%) rotate(-45deg);
-                  font-size: 10rem;
-                  color: hsla(var(--primary) / 0.08);
-                  font-weight: 700;
-                  z-index: -1;
-                  pointer-events: none;
-              }
-          }
-      `}</style>
-    </>
+  @media print {
+    @page {
+      size: A4 portrait; /* or landscape if you prefer */
+      margin: 10mm;
+    }
+
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background-color: #fff !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    .print-container {
+      display: block !important;
+    }
+
+    /* Hide everything except printable area */
+    body > *:not(#printable-invoice-area) {
+      visibility: hidden;
+    }
+
+    #printable-invoice-area, #printable-invoice-area * {
+      visibility: visible;
+    }
+
+    #printable-invoice-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      max-width: 210mm; /* ensures perfect A4 width */
+      min-height: 297mm; /* ensures full A4 height */
+      margin: 0 auto;
+      padding: 10mm 15mm;
+      box-shadow: none !important;
+      border: none !important;
+      background: #fff !important;
+      overflow: visible !important;
+    }
+
+    /* Optional: hide any print:hidden class */
+    .print\\:hidden {
+      display: none !important;
+    }
+
+    /* Optional watermark */
+    #printable-invoice-area::after {
+      content: attr(data-watermark);
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 10rem;
+      color: rgba(0, 0, 0, 0.05);
+      font-weight: 700;
+      z-index: -1;
+      pointer-events: none;
+    }
+  }
+`}</style>
+</>
   )
 }

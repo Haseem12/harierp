@@ -191,39 +191,66 @@ export default function LabTestDetailPage() {
           </CardFooter>
         </Card>
       </div>
-      <style jsx global>{`
-          @media print {
-              @page {
-                size: A4;
-                margin: 10mm;
-              }
-              body {
-                  -webkit-print-color-adjust: exact !important;
-                  print-color-adjust: exact !important;
-                  background-color: #fff;
-              }
-              .print-container {
-                  display: block !important;
-              }
-              body > *:not(#printable-area) {
-                  display: none !important;
-              }
-              #printable-area, #printable-area * {
-                  visibility: visible;
-              }
-              #printable-area {
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                  width: 100%;
-                  max-width: none !important;
-                  box-shadow: none !important;
-                  border: none !important;
-                  padding: 0 !important;
-                  margin: 0 !important;
-              }
-          }
-      `}</style>
+     <style jsx global>{`
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 12mm; /* Slightly safer margin for most printers */
+    }
+
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      background-color: #fff !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    .print-container {
+      display: block !important;
+    }
+
+    /* Hide everything except printable area */
+    body > *:not(#printable-area) {
+      visibility: hidden !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #printable-area, #printable-area * {
+      visibility: visible !important;
+    }
+
+    #printable-area {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      max-width: 210mm; /* Forces content to fit A4 width */
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 10mm 15mm;
+      box-shadow: none !important;
+      border: none !important;
+      background: #fff !important;
+      overflow: visible !important;
+    }
+
+    /* Remove any animations or shadows when printing */
+    * {
+      box-shadow: none !important;
+      text-shadow: none !important;
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Optional: Hide specific elements like buttons or navbars */
+    .no-print, .print\\:hidden {
+      display: none !important;
+    }
+  }
+`}</style>
+
     </>
   );
 }
