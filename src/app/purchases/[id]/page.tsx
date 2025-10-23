@@ -192,7 +192,7 @@ export default function PurchaseOrderDetailPage() {
 
   return (
     <>
-      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 print:max-w-full print:p-0 print:m-0">
         <div className="flex items-center justify-between print:hidden">
           <Link href="/purchases" passHref>
             <Button variant="outline" size="icon" className="h-8 w-8 bg-transparent">
@@ -238,8 +238,8 @@ export default function PurchaseOrderDetailPage() {
           </div>
         </div>
 
-        <div id="printable-area" className="print:p-0">
-          <Card className="w-full shadow-lg print:shadow-none print:border-none print:rounded-none">
+        <div id="printable-area" className="print:w-full print:h-full">
+          <Card className="w-full shadow-lg print:shadow-none print:border-none print:rounded-none print:w-full">
             {/* Header Section */}
             <CardHeader className="bg-muted/50 p-6 print:p-4 print:bg-white print:border-b-2 print:border-foreground">
               <div className="flex justify-between items-start mb-6">
@@ -371,77 +371,180 @@ export default function PurchaseOrderDetailPage() {
       </div>
 
       <style jsx global>{`
-  @media print {
-    @page {
-      size: A4 portrait;
-      margin: 0;
-    }
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 10mm;
+          }
 
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
 
-    body {
-      background-color: #fff !important;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
+          html,
+          body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+          }
 
-    html {
-      margin: 0;
-      padding: 0;
-    }
+          body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+          }
 
-    /* Hide everything except printable area */
-    body > * {
-      display: none !important;
-    }
+          /* Show only the printable area */
+          #printable-area {
+            display: block !important;
+            width: 100%;
+            max-width: 210mm;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            background: white;
+            box-shadow: none;
+            border: none;
+            page-break-after: avoid;
+          }
 
-    #printable-area {
-      display: block !important;
-      position: static !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      border: none !important;
-      background: #fff !important;
-      page-break-after: avoid;
-    }
+          /* Hide all non-printable elements */
+          .print\\:hidden {
+            display: none !important;
+          }
 
-    #printable-area * {
-      display: revert !important;
-    }
+          /* Ensure card displays properly */
+          .card,
+          [class*="Card"] {
+            box-shadow: none !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            page-break-inside: avoid;
+          }
 
-    .print\:hidden {
-      display: none !important;
-    }
+          /* Header styling */
+          [class*="CardHeader"] {
+            background: white !important;
+            border-bottom: 2px solid #000 !important;
+            padding: 12mm !important;
+            margin: 0 !important;
+            page-break-inside: avoid;
+          }
 
-    /* Ensure proper spacing for A4 */
-    .max-w-4xl {
-      max-width: 100% !important;
-    }
+          /* Content styling */
+          [class*="CardContent"] {
+            background: white !important;
+            padding: 12mm !important;
+            margin: 0 !important;
+            page-break-inside: avoid;
+          }
 
-    /* Table styling for print */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+          /* Footer styling */
+          [class*="CardFooter"] {
+            background: white !important;
+            border-top: 2px solid #000 !important;
+            padding: 12mm !important;
+            margin: 0 !important;
+            page-break-inside: avoid;
+          }
 
-    td, th {
-      padding: 4px 6px !important;
-      border: 1px solid #ddd !important;
-    }
+          /* Table styling */
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8mm 0;
+            page-break-inside: avoid;
+          }
 
-    /* Prevent page breaks inside elements */
-    .card, [role="region"] {
-      page-break-inside: avoid;
-    }
-  }
-`}</style>
+          thead {
+            background: #f5f5f5 !important;
+            page-break-inside: avoid;
+          }
+
+          th,
+          td {
+            border: 1px solid #000 !important;
+            padding: 6px 8px !important;
+            text-align: left;
+            font-size: 10pt;
+          }
+
+          th {
+            font-weight: bold;
+            background: #f5f5f5 !important;
+          }
+
+          tr {
+            page-break-inside: avoid;
+          }
+
+          /* Text sizing for print */
+          h1 {
+            font-size: 18pt !important;
+            margin: 0 0 4mm 0 !important;
+          }
+
+          h2 {
+            font-size: 14pt !important;
+            margin: 0 0 3mm 0 !important;
+          }
+
+          h3 {
+            font-size: 11pt !important;
+            margin: 6mm 0 3mm 0 !important;
+            font-weight: bold;
+          }
+
+          p {
+            margin: 0 0 2mm 0 !important;
+            font-size: 10pt;
+          }
+
+          /* Badge styling */
+          [class*="badge"] {
+            border: 1px solid #000 !important;
+            padding: 2px 6px !important;
+            font-size: 9pt;
+          }
+
+          /* Signature lines */
+          div[style*="border-t"] {
+            border-top: 1px solid #000 !important;
+            margin: 4mm 0 !important;
+          }
+
+          /* Remove shadows and unnecessary styling */
+          * {
+            box-shadow: none !important;
+          }
+
+          /* Ensure content is visible */
+          body > * {
+            display: none !important;
+          }
+
+          body > #__next {
+            display: block !important;
+          }
+
+          #__next > * {
+            display: none !important;
+          }
+
+          #printable-area {
+            display: block !important;
+          }
+
+          #printable-area * {
+            display: revert !important;
+          }
+        }
+      `}</style>
     </>
   )
 }
