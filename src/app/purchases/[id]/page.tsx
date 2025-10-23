@@ -188,7 +188,7 @@ export default function PurchaseOrderDetailPage() {
   }
 
   const isPrintableView = purchaseOrder.status === "Received"
-  const viewTitle = isPrintableView ? "Goods Received Note" : "Purchase Order Details"
+  const viewTitle = "Goods Received Note"
 
   return (
     <>
@@ -206,11 +206,9 @@ export default function PurchaseOrderDetailPage() {
                 <Edit className="mr-2 h-4 w-4" /> Edit
               </Button>
             </Link>
-            {isPrintableView && (
-              <Button variant="outline" onClick={handlePrintGRN}>
-                <FileSignature className="mr-2 h-4 w-4" /> Print GRN
-              </Button>
-            )}
+            <Button variant="outline" onClick={handlePrintGRN}>
+              <FileSignature className="mr-2 h-4 w-4" /> Print GRN
+            </Button>
             {(purchaseOrder.status === "Ordered" || purchaseOrder.status === "Partially Received") && (
               <Button onClick={handleReceiveItems} disabled={isReceiving}>
                 {isReceiving ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <Truck className="mr-2 h-4 w-4" />}
