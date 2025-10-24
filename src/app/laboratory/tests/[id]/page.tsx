@@ -147,7 +147,7 @@ return (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img
-                src="/hari-logo.png"
+                src="/hari logo-01.png"
                 alt="Company Logo"
                 className="w-14 h-14 rounded-full border border-gray-200 object-cover"
               />
@@ -156,8 +156,8 @@ return (
                   Hari Industries Limited
                 </h1>
                 <p className="text-sm text-gray-600 leading-tight">
-                  Plot 7, Industrial Layout, Kaduna, Nigeria<br />
-                  Tel: +234 803 456 7890 | Email: info@hariindustries.com
+                  KM 3 Zaria-Kano Expressway, Maraban Gwanda, Sabon Gari Zaria, Kaduna, Nigeria<br />
+                  Tel: +234 8093939368, 08125293535 | Email: contact@hariindustries.ng
                 </p>
               </div>
             </div>
