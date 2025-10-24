@@ -238,7 +238,6 @@ return (
       </Card>
     </div>
 
-    {/* PRINT STYLES */}
     <style jsx global>{`
       @media print {
         @page {
@@ -264,7 +263,8 @@ return (
         .print\\:hidden {
           display: none !important;
         }
-      }
-    `}</style>
+      }    `}</style>
   </>
 );
+}
+
