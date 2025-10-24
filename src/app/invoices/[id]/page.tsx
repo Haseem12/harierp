@@ -255,15 +255,16 @@ export default function InvoiceDetailsPage() {
             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 print:mb-6">
               <div className="flex items-center gap-4">
                 <img
-                  src="http://harisindustries.com.ng/busa-api/database/hari%20logo-01.png"
-                  alt="Company Logo"
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                  }}
-                />
+  src="/hari-logo.png"
+  alt="Company Logo"
+  style={{
+    width: "50px",
+    height: "50px",
+    borderRadius: "50%",
+    objectFit: "cover",
+  }}
+/>
+
                 <div>
                   <h1 className="text-3xl font-bold text-primary">INVOICE</h1>
                   <p className="text-muted-foreground text-sm"># {invoice.invoiceNumber}</p>
