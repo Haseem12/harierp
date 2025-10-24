@@ -124,189 +124,147 @@ export default function LabTestDetailPage() {
       </div>
     );
   }
-
-  return (
-    <>
-      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 print:hidden">
-        <div className="flex items-center justify-between">
-          <Link href="/laboratory/tests" passHref>
-            <Button variant="outline" size="icon" className="h-8 w-8"><ArrowLeft className="h-4 w-4" /><span className="sr-only">Back</span></Button>
-          </Link>
-          <Button onClick={handlePrint}><Printer className="mr-2 h-4 w-4" /> Print Report</Button>
-        </div>
+return (
+  <>
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 print:hidden">
+      <div className="flex items-center justify-between">
+        <Link href="/laboratory/tests" passHref>
+          <Button variant="outline" size="icon" className="h-8 w-8">
+            <ArrowLeft className="h-4 w-4" />
+            <span className="sr-only">Back</span>
+          </Button>
+        </Link>
+        <Button onClick={handlePrint}>
+          <Printer className="mr-2 h-4 w-4" /> Print Report
+        </Button>
       </div>
-      <div id="printable-area" className="print-container">
-        <Card className="w-full shadow-lg print:shadow-none print:border-none">
-          <CardHeader className="text-center bg-muted/30 p-6 print:bg-transparent">
-            <div className="flex justify-center items-center gap-2 mb-2">
-              <TestTube2 className="h-8 w-8 text-primary" />
-              <h1 className="text-2xl font-bold">Hari Industries Limited</h1>
-            </div>
-            <CardTitle className="text-xl">Laboratory Test Report</CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6 pb-6 border-b">
-              <InfoItem icon={Hash} label="Sample ID" value={test.sampleId} className="font-mono"/>
-              <InfoItem icon={Package} label="Product" value={test.productName} className="font-semibold"/>
-              <InfoItem icon={Calendar} label="Test Date" value={format(test.testDate, 'PP')} />
-              <InfoItem icon={Hash} label="Batch Number" value={test.batchNumber || 'N/A'}/>
-            </div>
+    </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <ResultCard title="Physical Test" status={test.physicalTest} icon={Eye}/>
-              <ResultCard title="Chemical Test" status={test.chemicalTest} icon={FlaskConical}/>
-              <ResultCard title="Microbiological Test" status={test.microbiologicalTest} icon={Bug}/>
-            </div>
-            
-            <h3 className="font-semibold mb-4 text-lg">Test Parameters & Results</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              <InfoItem icon={Droplets} label="pH Level" value={test.phLevel?.toFixed(2) || 'N/A'} />
-              <InfoItem icon={FlaskConical} label="TDS Level (ppm)" value={test.tdsLevel?.toLocaleString() || 'N/A'} />
-              <InfoItem icon={Zap} label="Chlorine (mg/L)" value={test.chlorineLevel?.toFixed(2) || 'N/A'} />
-              <InfoItem icon={Wind} label="Turbidity (NTU)" value={test.turbidity?.toFixed(2) || 'N/A'} />
-              <InfoItem icon={Zap} label="Conductivity (µS/cm)" value={test.conductivity?.toLocaleString() || 'N/A'} />
-              <InfoItem icon={Thermometer} label="Temperature (°C)" value={test.temperature?.toFixed(1) || 'N/A'} />
-            </div>
-            
-            {test.notes && (
-              <div className="mt-6 pt-4 border-t">
-                <InfoItem icon={Info} label="Notes" value={test.notes} />
+    <div id="printable-area" className="print-container bg-white">
+      <Card className="w-full border border-gray-300 shadow-md print:shadow-none print:border-none">
+        {/* HEADER */}
+        <CardHeader className="relative p-8 border-b bg-gradient-to-r from-blue-50 to-cyan-50 print:bg-transparent">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img
+                src="/hari-logo.png"
+                alt="Company Logo"
+                className="w-14 h-14 rounded-full border border-gray-200 object-cover"
+              />
+              <div>
+                <h1 className="text-2xl font-bold text-slate-800 uppercase">
+                  Hari Industries Limited
+                </h1>
+                <p className="text-sm text-gray-600 leading-tight">
+                  Plot 7, Industrial Layout, Kaduna, Nigeria<br />
+                  Tel: +234 803 456 7890 | Email: info@hariindustries.com
+                </p>
               </div>
-            )}
-          </CardContent>
-          <CardFooter className="bg-muted/50 p-6 flex-col items-center gap-6 print:mt-16">
-               <div className="w-full flex justify-center">
-                  <Badge variant={test.overallStatus === 'Pass' ? 'default' : test.overallStatus === 'Fail' ? 'destructive' : 'secondary'} className="text-xl px-6 py-2">
-                      Overall Result: {test.overallStatus}
-                  </Badge>
-              </div>
-              <div className="w-full flex justify-around">
-                  <div className="text-center">
-                      <p className="border-t pt-2 mt-8 w-48">Tested By (Signature)</p>
-                  </div>
-                  <div className="text-center">
-                      <p className="border-t pt-2 mt-8 w-48">Reviewed By (Signature)</p>
-                  </div>
-              </div>
-          </CardFooter>
-        </Card>
-      </div>
-     <style jsx global>
-     
-     {`
-@media print {
-  @page {
-    size: A4;
-    margin: 10mm;
-  }
+            </div>
+            <div className="text-right">
+              <h2 className="font-semibold text-lg text-slate-700">
+                Laboratory Test Report
+              </h2>
+              <p className="text-xs text-gray-500">
+                Generated on {format(new Date(), "PPpp")}
+              </p>
+            </div>
+          </div>
+        </CardHeader>
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: white !important;
-  }
+        {/* BODY */}
+        <CardContent className="p-8">
+          {/* Section 1: Basic Info */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6 pb-6 border-b border-gray-200">
+            <InfoItem icon={Hash} label="Sample ID" value={test.sampleId} className="font-mono" />
+            <InfoItem icon={Package} label="Product" value={test.productName} className="font-semibold" />
+            <InfoItem icon={Calendar} label="Test Date" value={format(test.testDate, "PP")} />
+            <InfoItem icon={Hash} label="Batch Number" value={test.batchNumber || "N/A"} />
+          </div>
 
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-    box-shadow: none !important;
-  }
+          {/* Section 2: Result Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <ResultCard title="Physical Test" status={test.physicalTest} icon={Eye} />
+            <ResultCard title="Chemical Test" status={test.chemicalTest} icon={FlaskConical} />
+            <ResultCard title="Microbiological Test" status={test.microbiologicalTest} icon={Bug} />
+          </div>
 
-  #printable-area {
-    display: block !important;
-    width: 100%;
-    max-width: 210mm;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    background: white;
-    box-shadow: none !important;
-    border: none !important;
-    visibility: visible !important;
-    position: relative !important;
-    opacity: 1 !important;
-    page-break-after: avoid;
-  }
+          {/* Section 3: Test Parameters */}
+          <h3 className="font-semibold mb-4 text-lg text-slate-700 border-b border-gray-300 pb-2">
+            Test Parameters & Results
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-slate-800">
+            <InfoItem icon={Droplets} label="pH Level" value={test.phLevel?.toFixed(2) || "N/A"} />
+            <InfoItem icon={FlaskConical} label="TDS Level (ppm)" value={test.tdsLevel?.toLocaleString() || "N/A"} />
+            <InfoItem icon={Zap} label="Chlorine (mg/L)" value={test.chlorineLevel?.toFixed(2) || "N/A"} />
+            <InfoItem icon={Wind} label="Turbidity (NTU)" value={test.turbidity?.toFixed(2) || "N/A"} />
+            <InfoItem icon={Zap} label="Conductivity (µS/cm)" value={test.conductivity?.toLocaleString() || "N/A"} />
+            <InfoItem icon={Thermometer} label="Temperature (°C)" value={test.temperature?.toFixed(1) || "N/A"} />
+          </div>
 
-  /* Hide elements you mark as print:hidden */
-  .print\\:hidden {
-    display: none !important;
-  }
+          {/* Section 4: Notes */}
+          {test.notes && (
+            <div className="mt-8 pt-4 border-t border-gray-200">
+              <InfoItem icon={Info} label="Notes" value={test.notes} />
+            </div>
+          )}
+        </CardContent>
 
-  /* Card styling */
-  [class*="Card"] {
-    box-shadow: none !important;
-    border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    page-break-inside: avoid;
-  }
+        {/* FOOTER */}
+        <CardFooter className="p-8 flex-col items-center gap-8 print:mt-16 border-t border-gray-200">
+          <div className="w-full flex justify-center mb-6">
+            <Badge
+              variant={
+                test.overallStatus === "Pass"
+                  ? "default"
+                  : test.overallStatus === "Fail"
+                  ? "destructive"
+                  : "secondary"
+              }
+              className="text-lg px-8 py-2 uppercase tracking-wide"
+            >
+              Overall Result: {test.overallStatus}
+            </Badge>
+          </div>
+          <div className="w-full flex justify-around text-center text-sm">
+            <div>
+              <p className="border-t pt-2 mt-8 w-48">Tested By (Signature)</p>
+            </div>
+            <div>
+              <p className="border-t pt-2 mt-8 w-48">Reviewed By (Signature)</p>
+            </div>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
 
-  /* Table styling */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0;
-    page-break-inside: avoid;
-  }
-
-  thead {
-    page-break-inside: avoid;
-  }
-
-  th,
-  td {
-    border: 1px solid #cbd5e1 !important;
-    padding: 8px 10px !important;
-    text-align: left;
-    font-size: 10pt;
-  }
-
-  th {
-    font-weight: bold;
-    background: white !important;
-    border-bottom: 2px solid #1e293b !important;
-  }
-
-  tr {
-    page-break-inside: avoid;
-  }
-
-  /* Typography */
-  h1 {
-    font-size: 16pt !important;
-    margin: 0 !important;
-    color: #1e293b !important;
-  }
-
-  h2 {
-    font-size: 14pt !important;
-    margin: 0 !important;
-    color: #1e293b !important;
-  }
-
-  h3 {
-    font-size: 10pt !important;
-    margin: 0 0 8pt 0 !important;
-    font-weight: bold;
-    color: #64748b !important;
-  }
-
-  p {
-    margin: 0 !important;
-    font-size: 10pt;
-    color: #334155 !important;
-  }
-}
-`}
-
-     
-     
-     </style>
-
-    </>
-  );
-}
+    {/* PRINT STYLES */}
+    <style jsx global>{`
+      @media print {
+        @page {
+          size: A4;
+          margin: 10mm;
+        }
+        html, body {
+          background: white !important;
+          -webkit-print-color-adjust: exact !important;
+        }
+        * {
+          color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          box-shadow: none !important;
+        }
+        #printable-area {
+          width: 100%;
+          max-width: 210mm;
+          margin: 0 auto;
+          padding: 0;
+          border: none !important;
+        }
+        .print\\:hidden {
+          display: none !important;
+        }
+      }
+    `}</style>
+  </>
+);
