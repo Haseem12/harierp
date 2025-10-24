@@ -255,7 +255,7 @@ export default function InvoiceDetailsPage() {
             <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8 print:mb-6">
               <div className="flex items-center gap-4">
                 <img
-  src="/hari-logo.png"
+  src="/hari logo-01.png"
   alt="Company Logo"
   style={{
     width: "50px",
