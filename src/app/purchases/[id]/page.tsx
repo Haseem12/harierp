@@ -403,11 +403,14 @@ export default function PurchaseOrderDetailPage() {
 
       <style jsx global>{`
         @media print {
-          @page {
-            size: A4 portrait;
-            margin: 0;
-            padding: 0;
-          }
+         @page {
+  size: A4;
+  margin: 10mm;
+}
+html, body {
+  background: white !important;
+}
+
 
           * {
             -webkit-print-color-adjust: exact !important;
@@ -516,20 +519,18 @@ export default function PurchaseOrderDetailPage() {
             display: none !important;
           }
 
-          body > #__next {
-            display: block !important;
-          }
+         /* Hide only elements explicitly marked as print:hidden */
+.print\:hidden {
+  display: none !important;
+}
 
-          #__next > * {
-            display: none !important;
-          }
+/* Make sure printable area is visible */
+#printable-area {
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  opacity: 1 !important;
 
-          #printable-area {
-            display: block !important;
-          }
-
-          #printable-area * {
-            display: revert !important;
           }
         }
       `}</style>
