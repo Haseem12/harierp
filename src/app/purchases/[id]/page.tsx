@@ -193,31 +193,31 @@ export default function PurchaseOrderDetailPage() {
   return (
     <>
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 print:max-w-full print:p-0 print:m-0">
-        <div className="flex items-center justify-between print:hidden">
+        <div className="flex items-center justify-between print:hidden gap-2">
           <Link href="/purchases" passHref>
             <Button variant="outline" size="icon" className="h-8 w-8 bg-transparent">
               <ArrowLeft className="h-4 w-4" />
               <span className="sr-only">Back to Purchase Orders</span>
             </Button>
           </Link>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Link href={`/purchases/${purchaseOrder.id}/edit`} passHref>
-              <Button variant="outline">
+              <Button variant="outline" size="sm">
                 <Edit className="mr-2 h-4 w-4" /> Edit
               </Button>
             </Link>
-            <Button variant="outline" onClick={handlePrintGRN}>
+            <Button variant="outline" size="sm" onClick={handlePrintGRN}>
               <FileSignature className="mr-2 h-4 w-4" /> Print GRN
             </Button>
             {(purchaseOrder.status === "Ordered" || purchaseOrder.status === "Partially Received") && (
-              <Button onClick={handleReceiveItems} disabled={isReceiving}>
+              <Button size="sm" onClick={handleReceiveItems} disabled={isReceiving}>
                 {isReceiving ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <Truck className="mr-2 h-4 w-4" />}
                 {isReceiving ? "Processing..." : "Mark as Received"}
               </Button>
             )}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">
+                <Button variant="destructive" size="sm">
                   <Trash2 className="mr-2 h-4 w-4" /> Delete
                 </Button>
               </AlertDialogTrigger>
@@ -239,33 +239,37 @@ export default function PurchaseOrderDetailPage() {
         </div>
 
         <div id="printable-area" className="print:w-full print:h-full">
-          <Card className="w-full shadow-lg print:shadow-none print:border-none print:rounded-none print:w-full">
+          <Card className="w-full shadow-lg print:shadow-none print:border-none print:rounded-none">
             {/* Header Section */}
-            <CardHeader className="bg-muted/50 p-6 print:p-4 print:bg-white print:border-b-2 print:border-foreground">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h1 className="text-3xl font-bold print:text-2xl mb-1">{defaultCompanyDetails.name}</h1>
-                  <p className="text-sm text-muted-foreground print:text-xs">{defaultCompanyDetails.address}</p>
+            <CardHeader className="bg-slate-50 p-6 print:p-0 print:bg-white print:border-b print:border-slate-300">
+              <div className="flex justify-between items-start gap-6 print:gap-4">
+                <div className="flex-1">
+                  <h1 className="text-2xl font-bold text-slate-900 print:text-xl mb-1">{defaultCompanyDetails.name}</h1>
+                  <p className="text-sm text-slate-600 print:text-xs">{defaultCompanyDetails.address}</p>
                 </div>
                 <div className="text-right">
-                  <h2 className="text-2xl font-bold print:text-xl text-primary">{viewTitle}</h2>
-                  <p className="text-sm font-semibold print:text-xs">Ref: {purchaseOrder.poNumber}</p>
+                  <h2 className="text-xl font-bold text-slate-900 print:text-lg mb-2">{viewTitle}</h2>
+                  <p className="text-sm font-semibold text-slate-700 print:text-xs">PO #: {purchaseOrder.poNumber}</p>
                 </div>
               </div>
             </CardHeader>
 
-            <CardContent className="p-6 print:p-4 print:bg-white">
-              {/* Document Info Section */}
-              <div className="grid grid-cols-3 gap-4 mb-8 print:mb-6 print:gap-2">
-                <div className="print:text-xs">
-                  <p className="text-xs font-semibold text-muted-foreground print:text-muted-foreground">Order Date</p>
-                  <p className="font-semibold">{format(new Date(purchaseOrder.orderDate), "dd MMM yyyy")}</p>
+            <CardContent className="p-6 print:p-0 print:bg-white">
+              {/* Document Info Grid */}
+              <div className="grid grid-cols-3 gap-6 mb-8 print:mb-6 print:gap-4 print:px-6 print:pt-6 print:pb-4 print:border-b print:border-slate-200">
+                <div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide print:text-slate-600">
+                    Order Date
+                  </p>
+                  <p className="text-sm font-semibold text-slate-900 mt-1 print:text-xs">
+                    {format(new Date(purchaseOrder.orderDate), "dd MMM yyyy")}
+                  </p>
                 </div>
-                <div className="print:text-xs">
-                  <p className="text-xs font-semibold text-muted-foreground print:text-muted-foreground">
+                <div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide print:text-slate-600">
                     {isPrintableView ? "Received Date" : "Expected Delivery"}
                   </p>
-                  <p className="font-semibold">
+                  <p className="text-sm font-semibold text-slate-900 mt-1 print:text-xs">
                     {isPrintableView
                       ? format(new Date(purchaseOrder.updatedAt || Date.now()), "dd MMM yyyy")
                       : purchaseOrder.expectedDeliveryDate
@@ -273,53 +277,80 @@ export default function PurchaseOrderDetailPage() {
                         : "N/A"}
                   </p>
                 </div>
-                <div className="text-right print:text-xs">
-                  <p className="text-xs font-semibold text-muted-foreground print:text-muted-foreground">Status</p>
-                  <Badge variant={getStatusBadgeVariant(purchaseOrder.status)} className="print:text-xs">
+                <div className="text-right">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide print:text-slate-600">
+                    Status
+                  </p>
+                  <Badge variant={getStatusBadgeVariant(purchaseOrder.status)} className="mt-1 print:text-xs">
                     {purchaseOrder.status}
                   </Badge>
                 </div>
               </div>
 
               {/* Supplier Section */}
-              <div className="mb-8 print:mb-6 pb-6 print:pb-4 border-b print:border-b">
-                <h3 className="text-sm font-bold text-muted-foreground print:text-xs mb-2 uppercase">
+              <div className="mb-8 print:mb-6 print:px-6 pb-6 print:pb-4 border-b print:border-b print:border-slate-200">
+                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 print:text-slate-600">
                   Supplier Details
                 </h3>
-                <div className="flex items-start gap-2">
-                  <User className="h-4 w-4 text-muted-foreground mt-0.5 print:h-3 print:w-3" />
-                  <div className="print:text-sm">
-                    <p className="font-semibold">{purchaseOrder.supplier.name}</p>
+                <div className="flex items-start gap-3">
+                  <User className="h-4 w-4 text-slate-400 mt-0.5 print:h-3 print:w-3 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-slate-900 print:text-sm">{purchaseOrder.supplier.name}</p>
                   </div>
                 </div>
               </div>
 
               {/* Items Table */}
-              <div className="mb-8 print:mb-6">
-                <h3 className="text-sm font-bold text-muted-foreground print:text-xs mb-3 uppercase">Items Received</h3>
+              <div className="mb-8 print:mb-6 print:px-6">
+                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 print:text-slate-600">
+                  Items Received
+                </h3>
                 <div className="overflow-x-auto">
                   <Table className="print:text-xs">
                     <TableHeader>
-                      <TableRow className="print:border-b-2">
-                        <TableHead className="print:text-xs print:font-bold">Item Name</TableHead>
-                        <TableHead className="text-center print:text-xs print:font-bold">Category</TableHead>
-                        <TableHead className="text-center print:text-xs print:font-bold">Qty Ordered</TableHead>
+                      <TableRow className="bg-slate-100 print:bg-white print:border-b-2 print:border-slate-900">
+                        <TableHead className="font-semibold text-slate-900 print:text-xs print:font-bold">
+                          Item Name
+                        </TableHead>
+                        <TableHead className="text-center font-semibold text-slate-900 print:text-xs print:font-bold">
+                          Category
+                        </TableHead>
+                        <TableHead className="text-center font-semibold text-slate-900 print:text-xs print:font-bold">
+                          Qty Ordered
+                        </TableHead>
                         {isPrintableView && (
-                          <TableHead className="text-center print:text-xs print:font-bold">Qty Received</TableHead>
+                          <TableHead className="text-center font-semibold text-slate-900 print:text-xs print:font-bold">
+                            Qty Received
+                          </TableHead>
                         )}
-                        <TableHead className="text-center print:text-xs print:font-bold">Unit</TableHead>
+                        <TableHead className="text-center font-semibold text-slate-900 print:text-xs print:font-bold">
+                          Unit
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {purchaseOrder.items.map((item, index) => (
-                        <TableRow key={`${item.productId}-${index}`} className="print:border-b print:border-gray-300">
-                          <TableCell className="print:text-xs">{item.productName}</TableCell>
-                          <TableCell className="text-center print:text-xs">{item.category}</TableCell>
-                          <TableCell className="text-center print:text-xs">{item.quantity}</TableCell>
+                        <TableRow
+                          key={`${item.productId}-${index}`}
+                          className="border-b border-slate-200 print:border-b print:border-slate-300"
+                        >
+                          <TableCell className="py-3 print:py-2 print:text-xs text-slate-900">
+                            {item.productName}
+                          </TableCell>
+                          <TableCell className="text-center py-3 print:py-2 print:text-xs text-slate-700">
+                            {item.category}
+                          </TableCell>
+                          <TableCell className="text-center py-3 print:py-2 print:text-xs text-slate-700">
+                            {item.quantity}
+                          </TableCell>
                           {isPrintableView && (
-                            <TableCell className="text-center print:text-xs">{item.quantity}</TableCell>
+                            <TableCell className="text-center py-3 print:py-2 print:text-xs text-slate-700">
+                              {item.quantity}
+                            </TableCell>
                           )}
-                          <TableCell className="text-center print:text-xs">{item.unitOfMeasure}</TableCell>
+                          <TableCell className="text-center py-3 print:py-2 print:text-xs text-slate-700">
+                            {item.unitOfMeasure}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -329,39 +360,39 @@ export default function PurchaseOrderDetailPage() {
 
               {/* Notes Section */}
               {purchaseOrder.notes && (
-                <div className="mb-8 print:mb-6 pb-6 print:pb-4 border-t print:border-t">
-                  <h4 className="font-semibold text-sm print:text-xs mb-2">Notes:</h4>
-                  <p className="text-sm text-muted-foreground print:text-xs">{purchaseOrder.notes}</p>
+                <div className="mb-8 print:mb-6 print:px-6 pb-6 print:pb-4 border-t print:border-t print:border-slate-200">
+                  <h4 className="font-semibold text-sm text-slate-900 print:text-xs mb-2">Notes:</h4>
+                  <p className="text-sm text-slate-600 print:text-xs">{purchaseOrder.notes}</p>
                 </div>
               )}
             </CardContent>
 
             {/* Footer Section - Signatures */}
             {isPrintableView && (
-              <CardFooter className="bg-muted/50 print:bg-white print:border-t-2 print:border-foreground p-6 print:p-4 flex-col items-stretch gap-8 print:gap-6">
-                <div className="text-center text-xs text-muted-foreground print:text-xs print:text-foreground">
+              <CardFooter className="bg-slate-50 print:bg-white print:border-t print:border-slate-300 p-6 print:p-6 flex-col items-stretch gap-8 print:gap-6">
+                <div className="text-center text-xs text-slate-600 print:text-slate-700">
                   <p>This document confirms the receipt of the goods listed above in good condition.</p>
                 </div>
 
                 {/* Signature Lines */}
-                <div className="grid grid-cols-2 gap-8 print:gap-6 mt-8 print:mt-6">
+                <div className="grid grid-cols-2 gap-8 print:gap-12 mt-8 print:mt-6">
                   <div className="flex flex-col items-center">
                     <div
-                      className="w-full border-t-2 border-foreground print:border-t print:border-black mb-2 print:mb-1"
-                      style={{ height: "60px", print: { height: "40px" } }}
+                      className="w-full border-t-2 border-slate-900 mb-3 print:mb-2"
+                      style={{ minHeight: "50px" }}
                     ></div>
-                    <p className="font-semibold text-sm print:text-xs">Received By (Signature)</p>
-                    <p className="text-xs text-muted-foreground print:text-xs">Store Manager</p>
-                    <p className="text-xs text-muted-foreground print:text-xs mt-1">Date: _______________</p>
+                    <p className="font-semibold text-sm text-slate-900 print:text-xs">Received By (Signature)</p>
+                    <p className="text-xs text-slate-600 print:text-slate-700 mt-1">Store Manager</p>
+                    <p className="text-xs text-slate-600 print:text-slate-700 mt-2">Date: _______________</p>
                   </div>
                   <div className="flex flex-col items-center">
                     <div
-                      className="w-full border-t-2 border-foreground print:border-t print:border-black mb-2 print:mb-1"
-                      style={{ height: "60px", print: { height: "40px" } }}
+                      className="w-full border-t-2 border-slate-900 mb-3 print:mb-2"
+                      style={{ minHeight: "50px" }}
                     ></div>
-                    <p className="font-semibold text-sm print:text-xs">Supplier's Rep (Signature)</p>
-                    <p className="text-xs text-muted-foreground print:text-xs">Delivery Personnel</p>
-                    <p className="text-xs text-muted-foreground print:text-xs mt-1">Date: _______________</p>
+                    <p className="font-semibold text-sm text-slate-900 print:text-xs">Supplier's Rep (Signature)</p>
+                    <p className="text-xs text-slate-600 print:text-slate-700 mt-1">Delivery Personnel</p>
+                    <p className="text-xs text-slate-600 print:text-slate-700 mt-2">Date: _______________</p>
                   </div>
                 </div>
               </CardFooter>
@@ -374,7 +405,8 @@ export default function PurchaseOrderDetailPage() {
         @media print {
           @page {
             size: A4 portrait;
-            margin: 10mm;
+            margin: 0;
+            padding: 0;
           }
 
           * {
@@ -392,13 +424,6 @@ export default function PurchaseOrderDetailPage() {
             background: white;
           }
 
-          body {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-          }
-
-          /* Show only the printable area */
           #printable-area {
             display: block !important;
             width: 100%;
@@ -407,18 +432,16 @@ export default function PurchaseOrderDetailPage() {
             margin: 0;
             padding: 0;
             background: white;
-            box-shadow: none;
-            border: none;
+            box-shadow: none !important;
+            border: none !important;
             page-break-after: avoid;
           }
 
-          /* Hide all non-printable elements */
           .print\\:hidden {
             display: none !important;
           }
 
-          /* Ensure card displays properly */
-          .card,
+          /* Card styling */
           [class*="Card"] {
             box-shadow: none !important;
             border: none !important;
@@ -427,103 +450,68 @@ export default function PurchaseOrderDetailPage() {
             page-break-inside: avoid;
           }
 
-          /* Header styling */
-          [class*="CardHeader"] {
-            background: white !important;
-            border-bottom: 2px solid #000 !important;
-            padding: 12mm !important;
-            margin: 0 !important;
-            page-break-inside: avoid;
-          }
-
-          /* Content styling */
-          [class*="CardContent"] {
-            background: white !important;
-            padding: 12mm !important;
-            margin: 0 !important;
-            page-break-inside: avoid;
-          }
-
-          /* Footer styling */
-          [class*="CardFooter"] {
-            background: white !important;
-            border-top: 2px solid #000 !important;
-            padding: 12mm !important;
-            margin: 0 !important;
-            page-break-inside: avoid;
-          }
-
           /* Table styling */
           table {
             width: 100%;
             border-collapse: collapse;
-            margin: 8mm 0;
+            margin: 0;
             page-break-inside: avoid;
           }
 
           thead {
-            background: #f5f5f5 !important;
             page-break-inside: avoid;
           }
 
           th,
           td {
-            border: 1px solid #000 !important;
-            padding: 6px 8px !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 8px 10px !important;
             text-align: left;
             font-size: 10pt;
           }
 
           th {
             font-weight: bold;
-            background: #f5f5f5 !important;
+            background: white !important;
+            border-bottom: 2px solid #1e293b !important;
           }
 
           tr {
             page-break-inside: avoid;
           }
 
-          /* Text sizing for print */
+          /* Typography */
           h1 {
-            font-size: 18pt !important;
-            margin: 0 0 4mm 0 !important;
+            font-size: 16pt !important;
+            margin: 0 !important;
+            color: #1e293b !important;
           }
 
           h2 {
             font-size: 14pt !important;
-            margin: 0 0 3mm 0 !important;
+            margin: 0 !important;
+            color: #1e293b !important;
           }
 
           h3 {
-            font-size: 11pt !important;
-            margin: 6mm 0 3mm 0 !important;
+            font-size: 10pt !important;
+            margin: 0 0 8pt 0 !important;
             font-weight: bold;
+            color: #64748b !important;
           }
 
           p {
-            margin: 0 0 2mm 0 !important;
+            margin: 0 !important;
             font-size: 10pt;
+            color: #334155 !important;
           }
 
-          /* Badge styling */
-          [class*="badge"] {
-            border: 1px solid #000 !important;
-            padding: 2px 6px !important;
-            font-size: 9pt;
-          }
-
-          /* Signature lines */
-          div[style*="border-t"] {
-            border-top: 1px solid #000 !important;
-            margin: 4mm 0 !important;
-          }
-
-          /* Remove shadows and unnecessary styling */
+          /* Remove shadows */
           * {
             box-shadow: none !important;
           }
 
-          /* Ensure content is visible */
+          /* Hide non-printable content */
           body > * {
             display: none !important;
           }
