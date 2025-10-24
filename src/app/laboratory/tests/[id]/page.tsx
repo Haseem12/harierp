@@ -263,7 +263,7 @@ return (
         .print\\:hidden {
           display: none !important;
         }
-      }    `}</style>
+          `}</style>
   </>
 );
 }
