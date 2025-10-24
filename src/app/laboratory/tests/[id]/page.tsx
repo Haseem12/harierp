@@ -191,65 +191,121 @@ export default function LabTestDetailPage() {
           </CardFooter>
         </Card>
       </div>
-     <style jsx global>{`
-  @media print {
-    @page {
-      size: A4 portrait;
-      margin: 12mm; /* Slightly safer margin for most printers */
-    }
-
-    body {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-      background-color: #fff !important;
-      margin: 0;
-      padding: 0;
-    }
-
-    .print-container {
-      display: block !important;
-    }
-
-    /* Hide everything except printable area */
-    body > *:not(#printable-area) {
-      visibility: hidden !important;
-      height: 0 !important;
-      overflow: hidden !important;
-    }
-
-    #printable-area, #printable-area * {
-      visibility: visible !important;
-    }
-
-    #printable-area {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      max-width: 210mm; /* Forces content to fit A4 width */
-      min-height: 297mm;
-      margin: 0 auto;
-      padding: 10mm 15mm;
-      box-shadow: none !important;
-      border: none !important;
-      background: #fff !important;
-      overflow: visible !important;
-    }
-
-    /* Remove any animations or shadows when printing */
-    * {
-      box-shadow: none !important;
-      text-shadow: none !important;
-      animation: none !important;
-      transition: none !important;
-    }
-
-    /* Optional: Hide specific elements like buttons or navbars */
-    .no-print, .print\\:hidden {
-      display: none !important;
-    }
+     <style jsx global>
+     
+     {`
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
   }
-`}</style>
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: white !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    box-shadow: none !important;
+  }
+
+  #printable-area {
+    display: block !important;
+    width: 100%;
+    max-width: 210mm;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background: white;
+    box-shadow: none !important;
+    border: none !important;
+    visibility: visible !important;
+    position: relative !important;
+    opacity: 1 !important;
+    page-break-after: avoid;
+  }
+
+  /* Hide elements you mark as print:hidden */
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Card styling */
+  [class*="Card"] {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-inside: avoid;
+  }
+
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    page-break-inside: avoid;
+  }
+
+  th,
+  td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 8px 10px !important;
+    text-align: left;
+    font-size: 10pt;
+  }
+
+  th {
+    font-weight: bold;
+    background: white !important;
+    border-bottom: 2px solid #1e293b !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 16pt !important;
+    margin: 0 !important;
+    color: #1e293b !important;
+  }
+
+  h2 {
+    font-size: 14pt !important;
+    margin: 0 !important;
+    color: #1e293b !important;
+  }
+
+  h3 {
+    font-size: 10pt !important;
+    margin: 0 0 8pt 0 !important;
+    font-weight: bold;
+    color: #64748b !important;
+  }
+
+  p {
+    margin: 0 !important;
+    font-size: 10pt;
+    color: #334155 !important;
+  }
+}
+`}
+
+     
+     
+     </style>
 
     </>
   );
